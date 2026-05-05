@@ -6,12 +6,9 @@
   <title>SDM PKH Tapin</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Kunci Blueprint: Fit-to-Screen */
     body { overscroll-behavior-y: contain; -webkit-tap-highlight-color: transparent; }
     .hide-scroll::-webkit-scrollbar { display: none; }
     .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-    
-    /* Efek Glassmorphism Mewah */
     .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07); }
     .glass-input { background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.8); transition: all 0.2s; font-weight: 600; color: #1e293b; }
     .glass-input:focus { background: #fff; border-color: #6366f1; outline: none; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15); }
@@ -19,14 +16,11 @@
 </head>
 <body class="h-screen w-full bg-gradient-to-br from-indigo-50 via-white to-purple-50 text-slate-800 flex flex-col overflow-hidden font-sans">
 
-  <!-- Header -->
   <header class="pt-8 pb-4 px-6 glass-panel z-10 shrink-0 border-b border-white rounded-b-3xl">
     <div class="flex justify-between items-center">
       <div>
-        <h1 class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 tracking-tight">
-          SDM PKH Tapin
-        </h1>
-        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Sistem Input & Analitik</p>
+        <h1 class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 tracking-tight">SDM PKH Tapin</h1>
+        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Sistem Input & Analitik Smart</p>
       </div>
       <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-100 to-purple-100 flex items-center justify-center border border-white shadow-sm">
         <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
@@ -34,17 +28,14 @@
     </div>
   </header>
 
-  <!-- Konten Utama (Scrollable) -->
   <main class="flex-1 overflow-y-auto p-4 pb-32 hide-scroll relative" id="main-content">
     
-    <!-- VIEW: DASBOR & ANALISA DINAMIS -->
+    <!-- VIEW: DASBOR & ANALISA -->
     <div id="view-dashboard" class="space-y-4 transition-all duration-300">
-      
-      <!-- Kartu Eksekutif -->
       <div class="grid grid-cols-2 gap-3">
         <div class="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-3xl p-5 text-white shadow-lg border border-blue-400/30">
           <p class="text-3xl font-black mb-1" id="stat-total">0</p>
-          <p class="text-[10px] font-bold text-blue-100 uppercase tracking-wider">Total Database</p>
+          <p class="text-[10px] font-bold text-blue-100 uppercase tracking-wider">Total Data</p>
         </div>
         <div class="bg-gradient-to-br from-purple-500 to-fuchsia-500 rounded-3xl p-5 text-white shadow-lg border border-purple-400/30">
           <p class="text-3xl font-black mb-1" id="stat-kec">0</p>
@@ -52,47 +43,43 @@
         </div>
       </div>
 
-      <!-- Kontrol Analitik Dinamis -->
       <div class="glass-panel rounded-3xl p-5 mt-4 border border-white">
         <div class="flex justify-between items-center mb-3">
           <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
             <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
-            Analisa & Rekap
+            Analisa Dinamis
           </h3>
-          <button onclick="exportCSV()" class="bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg text-xs font-bold border border-indigo-100 shadow-sm active:scale-95">
-            Export CSV
-          </button>
+          <button onclick="exportCSV()" class="bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg text-xs font-bold border border-indigo-100 shadow-sm">Export CSV</button>
         </div>
         
         <div class="space-y-3 mb-4">
           <select id="groupMode" onchange="renderDynamicCards()" class="w-full px-4 py-3 glass-input rounded-xl text-sm">
-            <option value="kecamatan">Kelompokkan: Per Kecamatan</option>
-            <option value="desa">Kelompokkan: Per Desa</option>
-            <option value="namaPdp">Kelompokkan: Per Nama PDP</option>
+            <option value="kecamatan">Card View: Per Kecamatan</option>
+            <option value="desa">Card View: Per Desa</option>
+            <option value="namaPdp">Card View: Per Nama PDP</option>
           </select>
-          <input type="text" id="searchFilter" oninput="renderDynamicCards()" placeholder="Ketik kata kunci untuk filter..." class="w-full px-4 py-3 glass-input rounded-xl text-sm uppercase" />
+          <input type="text" id="searchFilter" oninput="renderDynamicCards()" placeholder="FILTER PENCARIAN..." class="w-full px-4 py-3 glass-input rounded-xl text-sm uppercase" />
         </div>
 
-        <!-- Wadah Kartu Analisa Dinamis -->
         <div id="dynamic-cards-container" class="space-y-3 max-h-60 overflow-y-auto hide-scroll p-1">
-          <p class="text-center text-xs text-slate-400 py-4" id="db-loading-text">Menyinkronkan Database...</p>
+          <p class="text-center text-xs text-slate-400 py-4" id="db-loading-text">Membaca Database...</p>
         </div>
       </div>
     </div>
 
-    <!-- VIEW: INPUT FORM INSTAN -->
+    <!-- VIEW: INPUT FORM -->
     <div id="view-input" class="hidden glass-panel rounded-3xl p-6 border border-white">
       <div class="mb-5 text-center">
-        <h2 class="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Form Input Cepat</h2>
-        <p class="text-[10px] text-slate-500 font-bold uppercase mt-1">Sistem Simpan Bypass Tanpa Loading</p>
+        <h2 class="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Form Smart Input</h2>
+        <p class="text-[10px] text-slate-500 font-bold uppercase mt-1">Otomatis Membaca Header Baris 2</p>
       </div>
       
       <form id="form-input" onsubmit="handleFormSubmit(event)" class="space-y-4">
         <div>
           <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1">Target Worksheet</label>
           <select id="sheetName" required class="w-full px-4 py-3.5 glass-input rounded-xl text-sm">
-            <option value="Sheet1">Sheet 1 - Daftar Hadir</option>
-            <option value="Sheet2">Sheet 2 - Laporan SKP</option>
+            <option value="Sheet1">Sheet 1</option>
+            <option value="Sheet2">Sheet 2</option>
           </select>
         </div>
 
@@ -106,7 +93,7 @@
         </div>
 
         <div>
-          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1">Detail Bulan Laporan</label>
+          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1">Detail Laporan</label>
           <select id="dataBulan" required class="w-full px-4 py-3.5 glass-input rounded-xl text-sm mb-3">
             <option value="">PILIH BULAN...</option>
             <option value="JANUARI">JANUARI</option>
@@ -118,9 +105,8 @@
           <input type="url" id="linkBukti" placeholder="LINK G-DRIVE (Opsional)" class="w-full px-4 py-3.5 glass-input rounded-xl text-sm" />
         </div>
         
-        <!-- Tombol Bypass -->
         <button type="submit" class="w-full py-4 mt-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black rounded-xl shadow-[0_8px_20px_-6px_rgba(79,70,229,0.5)] active:scale-95 transition-all text-sm uppercase tracking-wider">
-          Simpan Instan
+          Simpan Data Instan
         </button>
       </form>
     </div>
@@ -129,23 +115,20 @@
     <div id="view-agenda" class="hidden">
       <h2 class="text-lg font-black text-slate-800 mb-4 px-2 uppercase tracking-tight flex items-center gap-2">
         <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-        Riwayat Agenda
+        Riwayat Data Masuk
       </h2>
       <div id="agenda-list" class="space-y-3"></div>
     </div>
   </main>
 
-  <!-- Navigasi App Shell Mobile-First -->
   <nav class="absolute bottom-4 left-4 right-4 glass-panel rounded-3xl px-6 py-3 flex justify-between items-center z-20 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-white">
     <button onclick="switchTab('dashboard')" class="flex flex-col items-center gap-1.5 transition-colors text-indigo-600 w-16" id="nav-dashboard">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
       <span class="text-[10px] font-bold">Analisa</span>
     </button>
-    
     <button onclick="switchTab('input')" class="-mt-10 bg-gradient-to-tr from-blue-500 to-indigo-600 p-4 rounded-full text-white shadow-[0_10px_20px_rgba(79,70,229,0.4)] active:scale-90 transition-transform border-4 border-white">
       <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
     </button>
-    
     <button onclick="switchTab('agenda')" class="flex flex-col items-center gap-1.5 transition-colors text-slate-400 w-16" id="nav-agenda">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
       <span class="text-[10px] font-bold">Agenda</span>
@@ -153,46 +136,38 @@
   </nav>
 
   <script>
-    // MASUKKAN URL WEB APP YANG BARU DISINI
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxAATU6D0kQ9s9LqIFjIuXX7CmnpbOp5wBW_hl82pYIjSbRF4x3fIoWgMs-wImEijA8/exec';
+    // MASUKKAN URL DEPLOYMENT BARU DISINI
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbyp9j0GIqt7lBTgefke3VPzWsGh_Q-Y089HGQpqyLXCK30w4e-wPQ5j757qxcRDpU-Ryg/exec';
     let appData = [];
 
-    // Tembak GET Data
     async function initData() {
       try {
         const response = await fetch(GAS_URL);
         const result = await response.json();
-        
         if(result.status === 'success') {
           appData = result.data.reverse(); 
           updateStats();
-          renderDynamicCards(); // Render fitur analisa per kartu
+          renderDynamicCards();
           renderAgendaList();
         }
       } catch (error) {
-        document.getElementById('db-loading-text').innerText = "Database Gagal Diakses. Pastikan URL sudah 'Siapa Saja'.";
+        document.getElementById('db-loading-text').innerText = "Gagal memuat. Pastikan Akses 'Siapa Saja'.";
       }
     }
 
-    // LOGIKA DASHBOARD DINAMIS (Mengelompokkan Card sesuai filter)
     function renderDynamicCards() {
       const mode = document.getElementById('groupMode').value;
       const search = document.getElementById('searchFilter').value.toUpperCase();
       const container = document.getElementById('dynamic-cards-container');
       
       if(appData.length === 0) {
-          container.innerHTML = '<p class="text-center text-xs text-slate-400 py-4">Data masih kosong.</p>';
-          return;
+          container.innerHTML = '<p class="text-center text-xs text-slate-400 py-4">Data masih kosong.</p>'; return;
       }
 
-      // Filter Data Berdasarkan Pencarian
       const filteredData = appData.filter(d => 
-        d.kecamatan.toUpperCase().includes(search) || 
-        d.desa.toUpperCase().includes(search) || 
-        d.namaPdp.toUpperCase().includes(search)
+        d.kecamatan.toUpperCase().includes(search) || d.desa.toUpperCase().includes(search) || d.namaPdp.toUpperCase().includes(search)
       );
 
-      // Kelompokkan Data Berdasarkan Pilihan Dropdown
       const groupedData = {};
       filteredData.forEach(item => {
         const key = item[mode].toUpperCase() || 'LAINNYA';
@@ -200,32 +175,22 @@
         groupedData[key].push(item);
       });
 
-      // Render ke UI
       container.innerHTML = '';
       for(const [groupName, items] of Object.entries(groupedData)) {
         container.innerHTML += `
-          <div class="p-3.5 bg-white/80 rounded-2xl border border-white shadow-sm hover:shadow-md transition-shadow">
+          <div class="p-3.5 bg-white/80 rounded-2xl border border-white shadow-sm">
             <div class="flex justify-between items-center">
               <div class="flex-1 overflow-hidden pr-2">
                 <p class="text-[10px] text-slate-400 font-bold uppercase mb-0.5">${mode}</p>
                 <h4 class="font-black text-slate-800 text-sm truncate">${groupName}</h4>
               </div>
-              <div class="flex flex-col items-end">
-                <span class="text-xs font-black bg-indigo-100 text-indigo-600 px-3 py-1.5 rounded-lg border border-indigo-200">
-                  ${items.length} Data
-                </span>
-              </div>
+              <span class="text-xs font-black bg-indigo-100 text-indigo-600 px-3 py-1.5 rounded-lg border border-indigo-200">${items.length} Data</span>
             </div>
-          </div>
-        `;
+          </div>`;
       }
-
-      if(Object.keys(groupedData).length === 0) {
-        container.innerHTML = '<p class="text-center text-xs text-slate-400 py-4">Pencarian tidak ditemukan.</p>';
-      }
+      if(Object.keys(groupedData).length === 0) container.innerHTML = '<p class="text-center text-xs text-slate-400 py-4">Tidak ditemukan.</p>';
     }
 
-    // Fungsi Input Cepat (Tembus CORS dengan mode: 'no-cors')
     function handleFormSubmit(e) {
       e.preventDefault();
       const payload = {
@@ -237,61 +202,39 @@
         linkBukti: document.getElementById('linkBukti').value
       };
 
-      // 1. Optimistic UI: Data langsung masuk memori & UI tanpa nunggu server
       appData.unshift({ ...payload, bulan: payload.dataBulan, link: payload.linkBukti }); 
-      updateStats(); 
-      renderDynamicCards(); 
-      renderAgendaList();
+      updateStats(); renderDynamicCards(); renderAgendaList();
 
-      // 2. Bersihkan form parsial
-      document.getElementById('namaPdp').value = '';
-      document.getElementById('desa').value = '';
-      document.getElementById('linkBukti').value = '';
-
-      // 3. Pindah Tab Otomatis
+      document.getElementById('namaPdp').value = ''; document.getElementById('desa').value = ''; document.getElementById('linkBukti').value = '';
       switchTab('agenda');
       
-      // 4. BYPASS CORS: Kirim ke GAS secara senyap dengan mode 'no-cors'
-      // Browser tidak akan mengecek respons, data langsung dipaksa masuk ke Spreadsheet
       fetch(GAS_URL, { 
         method: 'POST', 
-        mode: 'no-cors', // INI KUNCI AGAR TIDAK ERROR CORS
+        mode: 'no-cors', // KUNCI UTAMA ANTI LOADING
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload) 
-      }).catch(err => console.log("Latar belakang:", err));
+      }).catch(err => console.log(err));
     }
 
     function exportCSV() {
       const mode = document.getElementById('groupMode').value;
       const search = document.getElementById('searchFilter').value.toUpperCase();
-      
       const filteredData = appData.filter(d => 
-        d.kecamatan.toUpperCase().includes(search) || 
-        d.desa.toUpperCase().includes(search) || 
-        d.namaPdp.toUpperCase().includes(search)
+        d.kecamatan.toUpperCase().includes(search) || d.desa.toUpperCase().includes(search) || d.namaPdp.toUpperCase().includes(search)
       );
-
       if(filteredData.length === 0) return alert("Data kosong.");
-
       let csv = "Nama PDP,Desa,Kecamatan,Bulan,Link Bukti\n";
       filteredData.forEach(row => { csv += `"${row.namaPdp}","${row.desa}","${row.kecamatan}","${row.bulan}","${row.link}"\n`; });
-      
       const uri = encodeURI("data:text/csv;charset=utf-8," + csv);
-      const link = document.createElement("a");
-      link.setAttribute("href", uri);
-      link.setAttribute("download", `Analisa_SDM_${mode}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const link = document.createElement("a"); link.setAttribute("href", uri); link.setAttribute("download", `Analisa_${mode}.csv`);
+      document.body.appendChild(link); link.click(); document.body.removeChild(link);
     }
 
     function switchTab(tabId) {
       ['dashboard', 'input', 'agenda'].forEach(v => document.getElementById(`view-${v}`).classList.add('hidden'));
       document.getElementById(`view-${tabId}`).classList.remove('hidden');
-
       document.getElementById('nav-dashboard').classList.replace('text-indigo-600', 'text-slate-400');
       document.getElementById('nav-agenda').classList.replace('text-indigo-600', 'text-slate-400');
-      
       if(tabId === 'dashboard') document.getElementById('nav-dashboard').classList.replace('text-slate-400', 'text-indigo-600');
       if(tabId === 'agenda') document.getElementById('nav-agenda').classList.replace('text-slate-400', 'text-indigo-600');
     }
@@ -302,8 +245,7 @@
     }
 
     function renderAgendaList() {
-      const container = document.getElementById('agenda-list');
-      container.innerHTML = '';
+      const container = document.getElementById('agenda-list'); container.innerHTML = '';
       appData.forEach(item => {
         container.innerHTML += `
           <div class="p-3.5 bg-white/80 rounded-2xl border border-white shadow-sm flex flex-col gap-2.5">
