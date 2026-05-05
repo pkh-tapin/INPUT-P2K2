@@ -3,278 +3,293 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>E-SDM Tapin</title>
+  <title>Sistem SDM PKH Tapin</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Kunci Blueprint: Mobile First & Fit to Screen */
+    /* Kunci Blueprint: Fit to screen & kunci scrolling luar */
     body { overscroll-behavior-y: contain; -webkit-tap-highlight-color: transparent; }
     .hide-scroll::-webkit-scrollbar { display: none; }
     .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     
-    /* Efek Glassmorphism Kelas Atas */
-    .glass-panel { 
-      background: rgba(255, 255, 255, 0.65); 
-      backdrop-filter: blur(16px); 
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.8); 
-      box-shadow: 0 10px 40px -10px rgba(31, 38, 135, 0.1); 
+    /* Panel yang lebih tegas dan jelas */
+    .solid-panel { 
+      background: #ffffff; 
+      border-radius: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid #f1f5f9;
     }
-    .glass-input {
-      background: rgba(255, 255, 255, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    .input-field {
+      background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 16px;
+      transition: all 0.2s ease;
     }
+    .input-field:focus { background: #fff; border-color: #4f46e5; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
   </style>
 </head>
-<body class="h-screen w-full bg-gradient-to-br from-indigo-50 via-white to-purple-100 text-slate-800 flex flex-col overflow-hidden font-sans">
+<body class="h-screen w-full bg-slate-50 text-slate-800 flex flex-col overflow-hidden font-sans">
 
-  <!-- Header Moderen -->
-  <header class="pt-10 pb-5 px-6 glass-panel z-10 shrink-0 rounded-b-[2rem]">
+  <!-- Header -->
+  <header class="pt-10 pb-6 px-6 bg-white z-10 shrink-0 rounded-b-[2rem] shadow-sm border-b border-slate-100">
     <div class="flex justify-between items-center">
       <div>
-        <h1 class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 tracking-tight">
-          E-SDM Tapin
-        </h1>
-        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Monitoring Terpadu</p>
+        <h1 class="text-2xl font-black text-slate-900 tracking-tight">SDM<span class="text-indigo-600">PKH</span> Tapin</h1>
+        <p class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mt-1">Sistem Laporan & Analitik</p>
       </div>
-      <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-100 to-purple-100 flex items-center justify-center border border-white shadow-sm">
-        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+      <div class="w-12 h-12 rounded-xl bg-indigo-50 flex items-center justify-center border border-indigo-100 shadow-sm">
+        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
       </div>
     </div>
   </header>
 
-  <!-- Konten Utama -->
-  <main class="flex-1 overflow-y-auto p-5 pb-28 hide-scroll relative" id="main-content">
+  <!-- Main Content Area -->
+  <main class="flex-1 overflow-y-auto p-5 pb-32 hide-scroll relative" id="main-content">
     
-    <!-- VIEW: DASHBOARD (Analitik) -->
-    <div id="view-dashboard" class="space-y-5 transition-all duration-500 opacity-100">
+    <!-- DASHBOARD & ANALISIS -->
+    <div id="view-dashboard" class="space-y-6 transition-all duration-300">
       
-      <!-- Kartu Statistik 3D -->
+      <!-- Statistik Eksekutif -->
       <div class="grid grid-cols-2 gap-4">
-        <div class="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl p-5 text-white shadow-[0_10px_20px_-10px_rgba(79,70,229,0.5)] border border-blue-400/30 relative overflow-hidden">
-          <div class="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full blur-xl"></div>
+        <div class="bg-gradient-to-br from-indigo-600 to-blue-600 rounded-3xl p-5 text-white shadow-lg relative overflow-hidden">
+          <svg class="absolute -right-4 -bottom-4 w-24 h-24 text-white opacity-10" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path></svg>
           <p class="text-4xl font-black mb-1" id="stat-total">0</p>
-          <p class="text-xs font-semibold text-blue-100 uppercase tracking-wide">Total Entri</p>
+          <p class="text-xs font-bold text-indigo-100 uppercase tracking-wide">Total Laporan</p>
         </div>
-        <div class="bg-gradient-to-br from-purple-500 to-fuchsia-600 rounded-3xl p-5 text-white shadow-[0_10px_20px_-10px_rgba(168,85,247,0.5)] border border-purple-400/30 relative overflow-hidden">
-          <div class="absolute -right-4 -top-4 w-16 h-16 bg-white/10 rounded-full blur-xl"></div>
+        <div class="bg-gradient-to-br from-purple-600 to-fuchsia-600 rounded-3xl p-5 text-white shadow-lg relative overflow-hidden">
+          <svg class="absolute -right-4 -bottom-4 w-24 h-24 text-white opacity-10" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
           <p class="text-4xl font-black mb-1" id="stat-kec">0</p>
-          <p class="text-xs font-semibold text-purple-100 uppercase tracking-wide">Kecamatan</p>
+          <p class="text-xs font-bold text-purple-100 uppercase tracking-wide">Kecamatan Aktif</p>
         </div>
       </div>
 
-      <!-- Area Analitik & Filter -->
-      <div class="glass-panel rounded-3xl p-5">
-        <div class="flex justify-between items-center mb-5">
-          <h3 class="font-bold text-slate-800 text-lg">Rekap Data</h3>
-          <button onclick="exportCSV()" class="flex items-center gap-1.5 text-xs font-bold text-blue-600 bg-white py-2 px-4 rounded-xl shadow-sm border border-slate-100 hover:scale-105 transition-transform">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-            CSV
-          </button>
-        </div>
-        
-        <div class="relative mb-5">
-          <svg class="absolute left-4 top-3.5 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-          <input type="text" id="filter-kec" placeholder="Cari Kecamatan..." oninput="renderDashboardList()" class="w-full pl-10 pr-4 py-3 glass-input rounded-2xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-300 outline-none transition-all placeholder-slate-400 font-medium" />
-        </div>
-        
-        <div id="dashboard-list" class="space-y-3">
-          <!-- Status Loading -->
-          <div id="loading-indicator" class="flex flex-col items-center justify-center py-6">
-            <div class="w-8 h-8 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-3"></div>
-            <p class="text-xs font-semibold text-slate-500">Menyinkronkan Database...</p>
+      <!-- Fitur Export Advanced -->
+      <div class="solid-panel p-5">
+        <h3 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 border-b pb-2">Export Data Rekap</h3>
+        <div class="space-y-3">
+          <div class="flex gap-2">
+            <select id="exportMode" onchange="toggleExportInput()" class="flex-1 px-3 py-2.5 input-field text-sm font-bold text-slate-700">
+              <option value="kabupaten">Semua (Se-Kabupaten)</option>
+              <option value="kecamatan">Per Kecamatan</option>
+              <option value="pdp">Per Nama PDP</option>
+            </select>
+            <button onclick="exportData()" class="bg-indigo-600 text-white px-4 rounded-xl font-bold text-sm shadow-md flex items-center gap-2 active:scale-95 transition-transform">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> CSV
+            </button>
           </div>
+          <input type="text" id="exportKeyword" placeholder="Ketikan filter (Opsional)..." class="hidden w-full px-4 py-2.5 input-field text-sm font-medium" />
+        </div>
+      </div>
+
+      <!-- Analisa Area -->
+      <div class="solid-panel p-5">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-bold text-slate-800 text-sm uppercase tracking-wider">Monitor Cepat</h3>
+          <span id="sync-status" class="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-md">Menyinkronkan...</span>
+        </div>
+        <div id="dashboard-list" class="space-y-3">
+           <div class="animate-pulse flex space-x-4 p-3 bg-slate-50 rounded-xl">
+             <div class="flex-1 space-y-4 py-1">
+               <div class="h-2 bg-slate-200 rounded w-3/4"></div>
+               <div class="h-2 bg-slate-200 rounded w-1/2"></div>
+             </div>
+           </div>
         </div>
       </div>
     </div>
 
-    <!-- VIEW: INPUT FORM -->
-    <div id="view-input" class="hidden glass-panel rounded-3xl p-6 transition-all duration-500">
-      <div class="text-center mb-6">
-        <h2 class="text-xl font-black text-slate-800">Formulir Instan</h2>
-        <p class="text-xs text-slate-500 font-medium mt-1">Sistem Simpan Cepat Tanpa Loading</p>
-      </div>
+    <!-- INPUT FORM -->
+    <div id="view-input" class="hidden solid-panel p-6">
+      <h2 class="text-xl font-black text-slate-800 mb-1">Entri Data</h2>
+      <p class="text-xs text-slate-500 font-medium mb-6">Database akan tersinkronisasi tanpa loading.</p>
       
       <form id="form-input" onsubmit="handleFormSubmit(event)" class="space-y-4">
         <div>
-          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 mb-1 block">Tujuan Penyimpanan</label>
-          <select id="sheetName" required class="w-full px-4 py-3.5 glass-input rounded-2xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-300 outline-none text-slate-700 font-medium">
-            <option value="Sheet1">Sheet 1 (Kehadiran)</option>
-            <option value="Sheet2">Sheet 2 (Laporan SKP)</option>
+          <label class="text-[11px] font-bold text-slate-500 uppercase ml-1 block mb-1">Target Penyimpanan</label>
+          <select id="sheetName" required class="w-full px-4 py-3.5 input-field text-sm font-bold text-slate-700">
+            <option value="Sheet1">Sheet 1 - Daftar Hadir</option>
+            <option value="Sheet2">Sheet 2 - Laporan SKP</option>
           </select>
         </div>
 
         <div>
-          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 mb-1 block">Data Pribadi</label>
-          <input type="text" id="namaPdp" required placeholder="Nama Lengkap PDP" class="w-full px-4 py-3.5 glass-input rounded-2xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-300 outline-none font-medium mb-3" />
+          <label class="text-[11px] font-bold text-slate-500 uppercase ml-1 block mb-1">Data Petugas</label>
+          <input type="text" id="namaPdp" required placeholder="Nama Lengkap PDP" class="w-full px-4 py-3.5 input-field text-sm font-medium mb-3 uppercase" />
           <div class="grid grid-cols-2 gap-3">
-            <input type="text" id="kecamatan" required placeholder="Kecamatan" class="px-4 py-3.5 glass-input rounded-2xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-300 outline-none font-medium" />
-            <input type="text" id="desa" required placeholder="Desa" class="px-4 py-3.5 glass-input rounded-2xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-300 outline-none font-medium" />
+            <input type="text" id="kecamatan" required placeholder="Kecamatan" class="px-4 py-3.5 input-field text-sm font-medium uppercase" />
+            <input type="text" id="desa" required placeholder="Desa" class="px-4 py-3.5 input-field text-sm font-medium uppercase" />
           </div>
         </div>
 
         <div>
-          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 mb-1 block">Detail Laporan</label>
-          <select id="dataBulan" required class="w-full px-4 py-3.5 glass-input rounded-2xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-300 outline-none text-slate-700 font-medium mb-3">
-            <option value="">Pilih Bulan...</option>
+          <label class="text-[11px] font-bold text-slate-500 uppercase ml-1 block mb-1">Keterangan Laporan</label>
+          <select id="dataBulan" required class="w-full px-4 py-3.5 input-field text-sm font-bold text-slate-700 mb-3">
+            <option value="">Pilih Bulan Laporan...</option>
             <option value="JANUARI">Januari</option>
             <option value="FEBRUARI">Februari</option>
             <option value="MARET">Maret</option>
             <option value="APRIL">April</option>
+            <option value="MEI">Mei</option>
           </select>
-          <input type="url" id="linkBukti" placeholder="Tautan Bukti G-Drive (Opsional)" class="w-full px-4 py-3.5 glass-input rounded-2xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-300 outline-none font-medium" />
+          <input type="url" id="linkBukti" placeholder="Link G-Drive (Opsional)" class="w-full px-4 py-3.5 input-field text-sm font-medium" />
         </div>
         
-        <button type="submit" class="w-full py-4 mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black rounded-2xl shadow-[0_8px_20px_-6px_rgba(79,70,229,0.6)] hover:shadow-lg active:scale-95 transition-all">
-          Kirim Data Sekarang
+        <button type="submit" class="w-full py-4 mt-2 bg-slate-900 text-white font-black rounded-xl shadow-lg hover:bg-indigo-600 active:scale-95 transition-all flex justify-center items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+          Simpan Instan
         </button>
       </form>
     </div>
 
-    <!-- VIEW: AGENDA -->
-    <div id="view-agenda" class="hidden transition-all duration-500">
-      <div class="flex items-center gap-2 mb-5 px-2">
-        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-        <h2 class="text-lg font-black text-slate-800">Riwayat Agenda</h2>
-      </div>
+    <!-- AGENDA -->
+    <div id="view-agenda" class="hidden">
+      <h2 class="text-xl font-black text-slate-800 mb-5 px-1 uppercase tracking-tight">Agenda Terakhir</h2>
       <div id="agenda-list" class="space-y-4"></div>
     </div>
   </main>
 
-  <!-- Navigasi Bawah Floating (App Shell) -->
-  <nav class="absolute bottom-4 left-4 right-4 glass-panel rounded-3xl px-6 py-3 flex justify-between items-center z-20 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)]">
-    <button onclick="switchTab('dashboard')" class="flex flex-col items-center gap-1.5 transition-colors text-indigo-600 w-16" id="nav-dashboard">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-      <span class="text-[10px] font-bold">Dasbor</span>
+  <!-- Bottom Navigation -->
+  <nav class="absolute bottom-6 left-6 right-6 bg-slate-900 rounded-3xl px-6 py-4 flex justify-between items-center z-20 shadow-2xl border border-slate-700">
+    <button onclick="switchTab('dashboard')" class="flex flex-col items-center gap-1 transition-colors text-white w-16" id="nav-dashboard">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+      <span class="text-[10px] font-bold uppercase tracking-wider">Analisa</span>
     </button>
     
-    <!-- Tombol FAB Plus di tengah -->
-    <button onclick="switchTab('input')" class="-mt-10 bg-gradient-to-tr from-blue-500 to-indigo-600 p-4 rounded-full text-white shadow-[0_10px_20px_rgba(79,70,229,0.4)] active:scale-90 transition-transform border-4 border-white/80">
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
+    <button onclick="switchTab('input')" class="-mt-12 bg-indigo-600 p-4 rounded-full text-white shadow-[0_10px_20px_rgba(79,70,229,0.4)] active:scale-90 transition-transform border-[6px] border-slate-50">
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
     </button>
     
-    <button onclick="switchTab('agenda')" class="flex flex-col items-center gap-1.5 transition-colors text-slate-400 w-16" id="nav-agenda">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-      <span class="text-[10px] font-bold">Agenda</span>
+    <button onclick="switchTab('agenda')" class="flex flex-col items-center gap-1 transition-colors text-slate-500 w-16" id="nav-agenda">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+      <span class="text-[10px] font-bold uppercase tracking-wider">Agenda</span>
     </button>
   </nav>
 
-  <!-- Script Logika Inti -->
   <script>
-    // PASTIKAN URL INI BENAR DAN TIDAK ADA SPASI DI AKHIR
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbzFAjIFkasFhbkga1CWj2jenA6ZlNy7z1kkIRg7phil3ktBwn3kscdIZiL1tx9CkYx6aQ/exec';
+    // MASUKKAN URL BARU DI SINI (Pastikan akses "Anyone")
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbzf3_9B1RA0nk5aCjETYpLHw9xZWcoiwwUoebIPrSDiSHjdnB4fMcfLB6HmDpklHzBeOA/exec';
     let appData = [];
 
-    // Tarik Data (GET)
     async function initData() {
+      const statusEl = document.getElementById('sync-status');
       try {
         const response = await fetch(GAS_URL);
-        if (!response.ok) throw new Error('Jaringan bermasalah');
         const result = await response.json();
         
         if(result.status === 'success') {
           appData = result.data.reverse(); 
-          document.getElementById('loading-indicator').style.display = 'none';
+          statusEl.innerText = 'Tersinkronisasi';
+          statusEl.classList.replace('bg-slate-100', 'bg-emerald-100');
+          statusEl.classList.replace('text-slate-400', 'text-emerald-600');
           updateStats();
           renderDashboardList();
           renderAgendaList();
         }
       } catch (error) {
-        document.getElementById('loading-indicator').innerHTML = `
-          <div class="text-center p-4 bg-red-50 rounded-xl border border-red-100">
-            <p class="text-xs font-bold text-red-500">Gagal menyinkronkan database.</p>
-            <p class="text-[10px] text-slate-500 mt-1">Pastikan URL Web App valid dan dapat diakses publik.</p>
+        statusEl.innerText = 'Akses Ditolak';
+        statusEl.classList.replace('bg-slate-100', 'bg-red-100');
+        statusEl.classList.replace('text-slate-400', 'text-red-600');
+        document.getElementById('dashboard-list').innerHTML = `
+          <div class="p-4 bg-red-50 rounded-xl border border-red-100 text-center">
+            <p class="text-sm font-bold text-red-600">Database Gagal Diakses</p>
+            <p class="text-[10px] text-red-400 mt-1">Deploy ulang GAS Anda dan atur akses menjadi "Siapa Saja" (Anyone).</p>
           </div>`;
-        console.error("Error Fetch:", error);
       }
     }
 
-    // Simpan Data Cepat (Optimistic UI)
+    function toggleExportInput() {
+      const mode = document.getElementById('exportMode').value;
+      const input = document.getElementById('exportKeyword');
+      if(mode === 'kabupaten') {
+        input.classList.add('hidden');
+      } else {
+        input.classList.remove('hidden');
+        input.placeholder = mode === 'kecamatan' ? "Ketik nama Kecamatan..." : "Ketik nama PDP...";
+      }
+    }
+
+    function exportData() {
+      if(appData.length === 0) return alert("Data kosong atau belum memuat.");
+      
+      const mode = document.getElementById('exportMode').value;
+      const keyword = document.getElementById('exportKeyword').value.toLowerCase();
+      let filtered = appData;
+
+      if (mode === 'kecamatan' && keyword) {
+        filtered = appData.filter(d => d.kecamatan.toLowerCase().includes(keyword));
+      } else if (mode === 'pdp' && keyword) {
+        filtered = appData.filter(d => d.namaPdp.toLowerCase().includes(keyword));
+      }
+
+      if (filtered.length === 0) return alert("Data dengan filter tersebut tidak ditemukan.");
+
+      let csv = "Nama PDP,Desa,Kecamatan,Bulan,Link Bukti\n";
+      filtered.forEach(row => { csv += `"${row.namaPdp}","${row.desa}","${row.kecamatan}","${row.bulan}","${row.link}"\n`; });
+      
+      const uri = encodeURI("data:text/csv;charset=utf-8," + csv);
+      const link = document.createElement("a");
+      link.setAttribute("href", uri);
+      link.setAttribute("download", `Rekap_${mode.toUpperCase()}_SDM.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
     function handleFormSubmit(e) {
       e.preventDefault();
-      
       const payload = {
         sheetName: document.getElementById('sheetName').value,
-        namaPdp: document.getElementById('namaPdp').value,
-        kecamatan: document.getElementById('kecamatan').value,
-        desa: document.getElementById('desa').value,
+        namaPdp: document.getElementById('namaPdp').value.toUpperCase(),
+        kecamatan: document.getElementById('kecamatan').value.toUpperCase(),
+        desa: document.getElementById('desa').value.toUpperCase(),
         dataBulan: document.getElementById('dataBulan').value,
         linkBukti: document.getElementById('linkBukti').value
       };
 
-      // 1. Sinkronisasi UI Instan
-      const newData = { ...payload, bulan: payload.dataBulan, link: payload.linkBukti };
-      appData.unshift(newData); 
-      updateStats();
-      renderDashboardList();
-      renderAgendaList();
+      // Optimistic UI Update
+      appData.unshift({ ...payload, bulan: payload.dataBulan, link: payload.linkBukti }); 
+      updateStats(); renderDashboardList(); renderAgendaList();
 
-      // 2. Kosongkan Form Parsial
       document.getElementById('namaPdp').value = '';
       document.getElementById('desa').value = '';
       document.getElementById('linkBukti').value = '';
 
-      // 3. Arahkan ke Agenda
       switchTab('agenda');
-
-      // 4. Proses Background (POST)
+      
       fetch(GAS_URL, { 
         method: 'POST', 
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload) 
-      }).catch(err => console.error("Gagal sinkron latar belakang:", err));
+      }).catch(err => console.log(err));
     }
 
-    // Navigasi View
     function switchTab(tabId) {
-      const views = ['dashboard', 'input', 'agenda'];
-      views.forEach(v => {
-        const el = document.getElementById(`view-${v}`);
-        if(v === tabId) {
-          el.classList.remove('hidden');
-          // Efek animasi masuk
-          setTimeout(() => { el.classList.remove('opacity-0', 'translate-y-4'); el.classList.add('opacity-100', 'translate-y-0'); }, 10);
-        } else {
-          el.classList.add('hidden', 'opacity-0', 'translate-y-4');
-          el.classList.remove('opacity-100', 'translate-y-0');
-        }
-      });
+      ['dashboard', 'input', 'agenda'].forEach(v => document.getElementById(`view-${v}`).classList.add('hidden'));
+      document.getElementById(`view-${tabId}`).classList.remove('hidden');
 
-      // Update warna icon
-      document.getElementById('nav-dashboard').classList.replace('text-indigo-600', 'text-slate-400');
-      document.getElementById('nav-agenda').classList.replace('text-indigo-600', 'text-slate-400');
+      document.getElementById('nav-dashboard').classList.replace('text-white', 'text-slate-500');
+      document.getElementById('nav-agenda').classList.replace('text-white', 'text-slate-500');
       
-      if(tabId === 'dashboard') document.getElementById('nav-dashboard').classList.replace('text-slate-400', 'text-indigo-600');
-      if(tabId === 'agenda') document.getElementById('nav-agenda').classList.replace('text-slate-400', 'text-indigo-600');
+      if(tabId === 'dashboard') document.getElementById('nav-dashboard').classList.replace('text-slate-500', 'text-white');
+      if(tabId === 'agenda') document.getElementById('nav-agenda').classList.replace('text-slate-500', 'text-white');
     }
 
-    // Render Data
     function updateStats() {
       document.getElementById('stat-total').innerText = appData.length;
       document.getElementById('stat-kec').innerText = new Set(appData.map(item => item.kecamatan.toUpperCase())).size;
     }
 
     function renderDashboardList() {
-      const filterText = document.getElementById('filter-kec').value.toLowerCase();
       const container = document.getElementById('dashboard-list');
-      if(!appData.length) return; // Biarkan loading jika kosong awal
+      if(appData.length === 0) { container.innerHTML = '<p class="text-sm text-slate-400">Data belum ada.</p>'; return; }
       
       container.innerHTML = '';
-      const filtered = appData.filter(d => d.kecamatan.toLowerCase().includes(filterText)).slice(0, 5); 
-      
-      if(filtered.length === 0) {
-         container.innerHTML = '<p class="text-center text-xs text-slate-400 py-4">Data tidak ditemukan.</p>';
-         return;
-      }
-
-      filtered.forEach(item => {
+      appData.slice(0, 5).forEach(item => {
         container.innerHTML += `
-          <div class="flex justify-between items-center p-3.5 bg-white/80 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
-            <div>
+          <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
+            <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center font-bold text-indigo-600">${item.namaPdp.charAt(0)}</div>
+            <div class="flex-1">
               <p class="text-sm font-bold text-slate-800">${item.namaPdp}</p>
-              <p class="text-[11px] font-medium text-slate-500 mt-0.5">${item.desa} &bull; ${item.kecamatan}</p>
+              <p class="text-[10px] font-semibold text-slate-500">${item.desa} • ${item.kecamatan}</p>
             </div>
-            <span class="text-[10px] font-black px-2.5 py-1.5 bg-indigo-50 text-indigo-600 rounded-lg uppercase tracking-wide border border-indigo-100">${item.bulan}</span>
+            <span class="text-[10px] font-black px-2 py-1 bg-white border border-slate-200 text-slate-600 rounded uppercase shadow-sm">${item.bulan}</span>
           </div>`;
       });
     }
@@ -284,37 +299,20 @@
       container.innerHTML = '';
       appData.forEach(item => {
         container.innerHTML += `
-          <div class="p-4 bg-white/80 rounded-2xl border border-slate-100 shadow-sm flex flex-col gap-3">
+          <div class="p-4 bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-col gap-3">
             <div class="flex justify-between items-start">
               <h4 class="font-bold text-slate-800 text-sm">${item.namaPdp}</h4>
-              <span class="text-[10px] font-black px-2.5 py-1 bg-purple-50 text-purple-600 rounded-lg uppercase border border-purple-100">${item.bulan}</span>
+              <span class="text-[10px] font-black px-2 py-1 bg-indigo-50 text-indigo-600 rounded uppercase border border-indigo-100">${item.bulan}</span>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-[10px] font-semibold px-2 py-1 bg-slate-50 text-slate-600 rounded-md border border-slate-200">${item.kecamatan}</span>
-              <span class="text-[10px] font-semibold px-2 py-1 bg-slate-50 text-slate-600 rounded-md border border-slate-200">${item.desa}</span>
+              <span class="text-[10px] font-bold px-2 py-1 bg-slate-100 text-slate-600 rounded">${item.kecamatan}</span>
+              <span class="text-[10px] font-bold px-2 py-1 bg-slate-100 text-slate-600 rounded">${item.desa}</span>
             </div>
           </div>`;
       });
     }
 
-    function exportCSV() {
-      if(appData.length === 0) return alert("Belum ada data untuk diekspor");
-      let csvContent = "data:text/csv;charset=utf-8,Nama PDP,Desa,Kecamatan,Bulan,Link Bukti\n";
-      appData.forEach(row => { csvContent += `"${row.namaPdp}","${row.desa}","${row.kecamatan}","${row.bulan}","${row.link}"\n`; });
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "Rekap_SDM_PKH.csv");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    // Eksekusi awal
     initData();
-    // Set animasi awal view
-    document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('opacity-0', 'translate-y-4'));
-    setTimeout(() => { document.getElementById('view-dashboard').classList.remove('opacity-0', 'translate-y-4'); }, 50);
   </script>
 </body>
 </html>
