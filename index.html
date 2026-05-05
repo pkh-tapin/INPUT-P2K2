@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>E-SDM Tapin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .glass { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05); }
+    .hide-scroll::-webkit-scrollbar { display: none; }
+    .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    body { overscroll-behavior-y: contain; } /* Kunci layar agar tidak tertarik/refresh di HP */
+  </style>
+</head>
+<body class="h-screen w-full bg-gradient-to-br from-purple-50 via-white to-blue-50 text-slate-800 flex flex-col overflow-hidden font-sans">
+
+  <!-- Header -->
+  <header class="pt-8 pb-4 px-6 glass z-10 shrink-0">
+    <h1 class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 tracking-tight">
+      E-SDM Tapin
+    </h1>
+    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Monitoring & Analitik SDM PKH</p>
+  </header>
+
+  <!-- Konten Utama (Scrollable area) -->
+  <main class="flex-1 overflow-y-auto p-4 pb-24 hide-scroll relative" id="main-content">
+    
+    <!-- VIEW: DASHBOARD -->
+    <div id="view-dashboard" class="space-y-4 transition-opacity duration-300">
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-4 text-white shadow-lg border border-blue-400/50">
+          <p class="text-3xl font-black" id="stat-total">0</p>
+          <p class="text-xs font-medium opacity-90">Total Entri Data</p>
+        </div>
+        <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-4 text-white shadow-lg border border-purple-400/50">
+          <p class="text-3xl font-black" id="stat-kec">0</p>
+          <p class="text-xs font-medium opacity-90">Kecamatan Aktif</p>
+        </div>
+      </div>
+
+      <div class="glass rounded-2xl p-5 mt-4">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-bold text-slate-700">Analitik Data</h3>
+          <button onclick="exportCSV()" class="flex items-center gap-1 text-xs font-bold text-blue-600 bg-blue-100 py-1.5 px-3 rounded-lg hover:bg-blue-200 transition">
+            Export CSV
+          </button>
+        </div>
+        <input type="text" id="filter-kec" placeholder="Filter Kecamatan..." oninput="renderDashboardList()" class="w-full px-4 py-2.5 mb-4 bg-white/50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-purple-400 outline-none transition" />
+        <div id="dashboard-list" class="space-y-3">
+          <p class="text-center text-xs text-slate-400" id="loading-text">Memuat data dari server...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: INPUT -->
+    <div id="view-input" class="hidden glass rounded-2xl p-6 transition-opacity duration-300">
+      <h2 class="text-lg font-black text-slate-800 border-b border-slate-200 pb-2 mb-4">Input Data Baru</h2>
+      <form id="form-input" onsubmit="handleFormSubmit(event)" class="space-y-4">
+        <select id="sheetName" required class="w-full px-4 py-3 bg-white/80 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-400 outline-none text-slate-600">
+          <option value="Sheet1">Target: Sheet 1 (Kehadiran)</option>
+          <option value="Sheet2">Target: Sheet 2 (Laporan)</option>
+        </select>
+        <div class="grid grid-cols-2 gap-3">
+          <input type="text" id="namaPdp" required placeholder="Nama PDP" class="col-span-2 px-4 py-3 bg-white/80 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-400 outline-none" />
+          <input type="text" id="kecamatan" required placeholder="Kecamatan" class="px-4 py-3 bg-white/80 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-400 outline-none" />
+          <input type="text" id="desa" required placeholder="Desa" class="px-4 py-3 bg-white/80 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-400 outline-none" />
+        </div>
+        <select id="dataBulan" required class="w-full px-4 py-3 bg-white/80 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-400 outline-none text-slate-600">
+          <option value="">Pilih Bulan</option>
+          <option value="JANUARI">Januari</option>
+          <option value="FEBRUARI">Februari</option>
+          <option value="MARET">Maret</option>
+          <option value="APRIL">April</option>
+          <option value="MEI">Mei</option>
+        </select>
+        <input type="url" id="linkBukti" placeholder="Link Bukti G-Drive (Opsional)" class="w-full px-4 py-3 bg-white/80 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-400 outline-none" />
+        <button type="submit" class="w-full py-3.5 mt-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-xl shadow-lg active:scale-95 transition-transform">
+          Simpan Instan
+        </button>
+      </form>
+    </div>
+
+    <!-- VIEW: AGENDA -->
+    <div id="view-agenda" class="hidden transition-opacity duration-300">
+      <h2 class="text-lg font-black text-slate-800 mb-4 px-1">Daftar Agenda & Riwayat</h2>
+      <div id="agenda-list" class="space-y-3"></div>
+    </div>
+  </main>
+
+  <!-- Navigasi Bawah -->
+  <nav class="absolute bottom-0 w-full px-6 py-4 glass flex justify-between items-center z-20">
+    <button onclick="switchTab('dashboard')" class="flex flex-col items-center gap-1 text-blue-600" id="nav-dashboard">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+      <span class="text-[10px] font-bold">Dasbor</span>
+    </button>
+    <button onclick="switchTab('input')" class="-mt-8 bg-gradient-to-tr from-blue-600 to-purple-600 p-4 rounded-full text-white shadow-lg active:scale-95 transition-transform border-4 border-white/50 backdrop-blur-sm">
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M12 4v16m8-8H4"></path></svg>
+    </button>
+    <button onclick="switchTab('agenda')" class="flex flex-col items-center gap-1 text-slate-400" id="nav-agenda">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+      <span class="text-[10px] font-bold">Agenda</span>
+    </button>
+  </nav>
+
+  <!-- Logika Aplikasi -->
+  <script>
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbzFAjIFkasFhbkga1CWj2jenA6ZlNy7z1kkIRg7phil3ktBwn3kscdIZiL1tx9CkYx6aQ/exec';
+    let appData = [];
+
+    // Fungsi Fetch Awal
+    async function initData() {
+      try {
+        const response = await fetch(GAS_URL);
+        const result = await response.json();
+        if(result.status === 'success') {
+          appData = result.data.reverse(); // Data terbaru di atas
+          document.getElementById('loading-text').style.display = 'none';
+          updateStats();
+          renderDashboardList();
+          renderAgendaList();
+        }
+      } catch (error) {
+        document.getElementById('loading-text').innerText = 'Gagal memuat data.';
+      }
+    }
+
+    // Fungsi Optimistic UI (Simpan Data)
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      
+      const payload = {
+        sheetName: document.getElementById('sheetName').value,
+        namaPdp: document.getElementById('namaPdp').value,
+        kecamatan: document.getElementById('kecamatan').value,
+        desa: document.getElementById('desa').value,
+        dataBulan: document.getElementById('dataBulan').value,
+        linkBukti: document.getElementById('linkBukti').value
+      };
+
+      // 1. Update UI Instan (Tanpa Loading)
+      const newData = { ...payload, bulan: payload.dataBulan, link: payload.linkBukti };
+      appData.unshift(newData); // Taruh di urutan teratas
+      updateStats();
+      renderDashboardList();
+      renderAgendaList();
+
+      // 2. Kosongkan Form (Kecuali lokasi/bulan agar cepat input berikutnya)
+      document.getElementById('namaPdp').value = '';
+      document.getElementById('desa').value = '';
+      document.getElementById('linkBukti').value = '';
+
+      // 3. Pindah otomatis ke tab Agenda untuk melihat hasil
+      switchTab('agenda');
+
+      // 4. Kirim ke GAS di latar belakang
+      fetch(GAS_URL, { method: 'POST', body: JSON.stringify(payload) })
+        .catch(err => console.error("Sync error:", err));
+    }
+
+    // Logika Navigasi Tab
+    function switchTab(tabId) {
+      document.getElementById('view-dashboard').classList.add('hidden');
+      document.getElementById('view-input').classList.add('hidden');
+      document.getElementById('view-agenda').classList.add('hidden');
+      document.getElementById('nav-dashboard').classList.replace('text-blue-600', 'text-slate-400');
+      document.getElementById('nav-agenda').classList.replace('text-purple-600', 'text-slate-400');
+
+      document.getElementById(`view-${tabId}`).classList.remove('hidden');
+      
+      if(tabId === 'dashboard') document.getElementById('nav-dashboard').classList.replace('text-slate-400', 'text-blue-600');
+      if(tabId === 'agenda') document.getElementById('nav-agenda').classList.replace('text-slate-400', 'text-purple-600');
+    }
+
+    // Render & Statistik
+    function updateStats() {
+      document.getElementById('stat-total').innerText = appData.length;
+      const uniqueKec = new Set(appData.map(item => item.kecamatan.toUpperCase()));
+      document.getElementById('stat-kec').innerText = uniqueKec.size;
+    }
+
+    function renderDashboardList() {
+      const filterText = document.getElementById('filter-kec').value.toLowerCase();
+      const container = document.getElementById('dashboard-list');
+      container.innerHTML = '';
+      
+      const filtered = appData.filter(d => d.kecamatan.toLowerCase().includes(filterText)).slice(0, 5); // Tampilkan 5 terbaru
+      
+      filtered.forEach(item => {
+        container.innerHTML += `
+          <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-slate-100 shadow-sm">
+            <div>
+              <p class="text-sm font-bold text-slate-800">${item.namaPdp}</p>
+              <p class="text-xs text-slate-500">${item.desa} • ${item.kecamatan}</p>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-1 bg-purple-100 text-purple-600 rounded-md uppercase">${item.bulan}</span>
+          </div>`;
+      });
+    }
+
+    function renderAgendaList() {
+      const container = document.getElementById('agenda-list');
+      container.innerHTML = '';
+      appData.forEach(item => {
+        container.innerHTML += `
+          <div class="p-4 glass rounded-2xl flex flex-col gap-2">
+            <div class="flex justify-between items-start">
+              <h4 class="font-bold text-slate-800">${item.namaPdp}</h4>
+              <span class="text-[10px] font-bold px-2 py-1 bg-blue-100 text-blue-600 rounded-md uppercase">${item.bulan}</span>
+            </div>
+            <div class="text-xs text-slate-500 flex items-center gap-2">
+              <span class="px-2 py-1 bg-white rounded-md border border-slate-200 shadow-sm">${item.kecamatan}</span>
+              <span class="px-2 py-1 bg-white rounded-md border border-slate-200 shadow-sm">${item.desa}</span>
+            </div>
+          </div>`;
+      });
+    }
+
+    // Export CSV Langsung dari Browser
+    function exportCSV() {
+      const filterText = document.getElementById('filter-kec').value.toLowerCase();
+      const filtered = appData.filter(d => d.kecamatan.toLowerCase().includes(filterText));
+      
+      let csvContent = "data:text/csv;charset=utf-8,Nama PDP,Desa,Kecamatan,Bulan,Link Bukti\n";
+      filtered.forEach(row => {
+        csvContent += `"${row.namaPdp}","${row.desa}","${row.kecamatan}","${row.bulan}","${row.link}"\n`;
+      });
+      
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "Rekap_SDM.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Mulai tarik data saat HTML dibuka
+    initData();
+  </script>
+</body>
+</html>
