@@ -12,7 +12,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
 
   // GANTI DENGAN URL WEB APP GAS ANDA
-  const GAS_URL = 'URL_WEB_APP_GAS_ANDA_DISINI'; 
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbzFAjIFkasFhbkga1CWj2jenA6ZlNy7z1kkIRg7phil3ktBwn3kscdIZiL1tx9CkYx6aQ/exec'; 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
