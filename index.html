@@ -12,18 +12,16 @@
     .glass-input { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; transition: all 0.2s; font-weight: 600; color: #1e293b; }
     .glass-input:focus { background: #fff; border-color: #4f46e5; outline: none; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); }
     .card-solid { background: #ffffff; border-radius: 20px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); border: 1px solid #f1f5f9; }
-    .task-card { transition: all 0.2s ease-in-out; cursor: pointer; }
-    .task-card:active { transform: scale(0.97); }
-    .task-card.active-card { background: #e0e7ff; border-color: #6366f1; box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.2); }
   </style>
 </head>
 <body class="h-screen w-full bg-slate-50 text-slate-800 flex flex-col overflow-hidden font-sans">
 
+  <!-- HEADER -->
   <header class="pt-8 pb-5 px-6 bg-white z-10 shrink-0 border-b border-slate-200 shadow-sm">
     <div class="flex justify-between items-center">
       <div>
         <h1 class="text-2xl font-black text-slate-900 tracking-tight">SDM<span class="text-indigo-600">PKH</span> Smart</h1>
-        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Multi-Area Identifier</p>
+        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Sistem Input Anti-Error</p>
       </div>
       <div id="sync-status" class="flex items-center gap-2 text-[10px] font-bold text-slate-400 bg-slate-100 px-3 py-1.5 rounded-full">
         <svg class="w-3 h-3 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> Connect...
@@ -31,22 +29,10 @@
     </div>
   </header>
 
+  <!-- KONTEN UTAMA -->
   <main class="flex-1 overflow-y-auto p-5 pb-32 hide-scroll relative">
     
-    <!-- ERROR BANNER (Muncul jika gagal baca database) -->
-    <div id="error-banner" class="hidden mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-2xl">
-      <h3 class="text-red-700 font-black text-sm mb-1 flex items-center gap-2">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-        Database Gagal Dibaca!
-      </h3>
-      <p id="error-message" class="text-xs text-red-600 font-semibold mb-2"></p>
-      <ul class="text-[10px] text-red-500 font-medium space-y-1 pl-4 list-disc">
-        <li>Cek apakah URL GAS di kode HTML <b>SUDAH DIGANTI</b> dengan yang paling baru.</li>
-        <li>Pastikan nama tab di Spreadsheet persis <b>Sheet1</b> dan <b>Sheet2</b> (tanpa spasi).</li>
-      </ul>
-    </div>
-
-    <!-- DASHBOARD -->
+    <!-- DASHBOARD & ANALISA (Sama seperti sebelumnya) -->
     <div id="view-dashboard" class="space-y-5 transition-all duration-300">
       <div class="grid grid-cols-2 gap-3">
         <div class="bg-indigo-600 rounded-3xl p-5 text-white shadow-lg relative overflow-hidden">
@@ -74,34 +60,49 @@
       </div>
     </div>
 
-    <!-- FORM INPUT SMART -->
+    <!-- VIEW INPUT (Sistem 1 Desa 1 Form) -->
     <div id="view-input" class="hidden card-solid p-6">
       <div class="mb-5 border-b border-slate-100 pb-4">
-        <h2 class="text-xl font-black text-slate-900 mb-1">Update Database</h2>
-        <p class="text-[10px] text-slate-500 font-bold uppercase">Multi-Area Smart Selector</p>
+        <h2 class="text-xl font-black text-slate-900 mb-1">Pembaruan Laporan</h2>
+        <p class="text-[10px] text-slate-500 font-bold uppercase">Filter berurutan untuk akurasi data</p>
       </div>
       
       <form id="form-input" onsubmit="handleFormSubmit(event)" class="space-y-4">
+        
+        <!-- Langkah 1: Pilih Sheet -->
         <div>
-          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1.5">Target Data</label>
-          <select id="sheetTarget" required onchange="populateNames()" class="w-full px-4 py-3.5 glass-input text-sm font-bold">
+          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1.5">Langkah 1: Target Data</label>
+          <select id="sheetTarget" required onchange="populateNames()" class="w-full px-4 py-3.5 glass-input text-sm font-bold bg-indigo-50 border-indigo-200 text-indigo-900">
             <option value="Sheet1">Sheet 1 (Daftar Hadir)</option>
             <option value="Sheet2">Sheet 2 (Laporan SKP)</option>
           </select>
         </div>
 
+        <!-- Langkah 2: Pilih Nama -->
         <div>
-          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1.5">Pilih Nama Pendamping</label>
+          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1.5">Langkah 2: Pilih Nama PDP</label>
           <select id="namaPdpSelect" required onchange="handleNameSelection()" class="w-full px-4 py-3.5 glass-input text-sm uppercase">
-            <option value="">-- MEMUAT NAMA --</option>
+            <option value="">-- TUNGGU DATABASE... --</option>
           </select>
         </div>
 
-        <div id="task-cards-area" class="space-y-2 pt-2 empty:hidden"></div>
-        <div id="dynamic-form-area" class="space-y-4 pt-4 mt-4 border-t border-slate-200 hidden"></div>
+        <!-- Langkah 3: Pilih Desa (Satu Desa Satu Form) -->
+        <div id="area-container" class="hidden">
+          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1.5">Langkah 3: Pilih Desa Tujuan</label>
+          <select id="desaSelect" required onchange="handleDesaSelection()" class="w-full px-4 py-3.5 glass-input text-sm uppercase">
+            <option value="">-- PILIH DESA --</option>
+          </select>
+        </div>
+
+        <!-- Wadah Form Dinamis -->
+        <div id="dynamic-form-area" class="space-y-4 pt-4 mt-4 border-t border-slate-200 hidden">
+          <!-- Input otomatis masuk ke sini -->
+        </div>
         
-        <button id="btn-submit" type="submit" class="hidden w-full py-4 mt-4 bg-indigo-600 text-white font-black rounded-xl shadow-[0_8px_20px_-6px_rgba(79,70,229,0.5)] active:scale-95 transition-all text-sm uppercase tracking-wider">
-          Simpan Pembaruan Data
+        <!-- Tombol Simpan -->
+        <button id="btn-submit" type="submit" class="hidden w-full py-4 mt-4 bg-indigo-600 text-white font-black rounded-xl shadow-[0_8px_20px_-6px_rgba(79,70,229,0.5)] active:scale-95 transition-all text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+          Simpan Ke Desa Terpilih
         </button>
       </form>
     </div>
@@ -113,6 +114,7 @@
     </div>
   </main>
 
+  <!-- NAVIGASI BAWAH -->
   <nav class="absolute bottom-5 left-5 right-5 bg-slate-900 rounded-3xl px-6 py-4 flex justify-between items-center z-20 shadow-2xl">
     <button onclick="switchTab('dashboard')" class="flex flex-col items-center gap-1.5 transition-colors text-white w-16" id="nav-dashboard">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
@@ -127,42 +129,36 @@
     </button>
   </nav>
 
+  <!-- LOGIKA JAVASCRIPT -->
   <script>
-    // =========================================================================
-    // WAJIB GANTI URL DI BAWAH INI DENGAN URL DEPLOYMENT BARU ANDA!
-    // =========================================================================
+    // =========================================================
+    // PASTIKAN URL APPS SCRIPT ANDA ADA DI SINI
+    // =========================================================
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbwpN_q5n6Cl-lFfX-OAqUPRZh1xhSV1zDIfy0KeiKUJBq_P8BAHYkooQlMfWZLaOx4bgw/exec';
     
     let serverData = { Sheet1: null, Sheet2: null }; 
     let agendaHistory = [];
-    let activeRowIndex = null;
+    let activeRowIndex = null; 
 
+    // MENGAMBIL DATA DATABASE
     async function initData() {
       try {
         const response = await fetch(GAS_URL);
         const result = await response.json();
         
-        if(result.status === 'error') {
-          throw new Error(result.message); // Tangkap error dari Apps Script
+        if(result.status === 'success') {
+          serverData.Sheet1 = result.Sheet1;
+          serverData.Sheet2 = result.Sheet2;
+          
+          document.getElementById('sync-status').innerHTML = '<span class="text-emerald-500">DATABASE OK</span>';
+          populateNames(); 
+          renderDashboard(); 
+        } else {
+           throw new Error("Gagal membaca. Format salah.");
         }
-        
-        // Cek apakah data dari URL lama yang terbaca
-        if (!result.Sheet1 || !result.Sheet2) {
-          throw new Error("URL Anda belum diperbarui ke Deployment Baru.");
-        }
-
-        serverData.Sheet1 = result.Sheet1;
-        serverData.Sheet2 = result.Sheet2;
-        
-        document.getElementById('sync-status').innerHTML = '<span class="text-emerald-500">DATABASE READY</span>';
-        document.getElementById('error-banner').classList.add('hidden');
-        populateNames(); 
-        renderDashboard(); 
-
       } catch (error) {
-        document.getElementById('sync-status').innerHTML = '<span class="text-red-500">ERROR!</span>';
-        document.getElementById('error-banner').classList.remove('hidden');
-        document.getElementById('error-message').innerText = error.message === 'Failed to fetch' ? "CORS Blocked: Pastikan Akses disetel ke 'Siapa Saja'." : error.message;
+        document.getElementById('sync-status').innerHTML = '<span class="text-red-500">ERROR BACA DB</span>';
+        alert("Gagal membaca database. Pastikan URL benar.");
       }
     }
 
@@ -170,35 +166,49 @@
       return headers.find(h => h.toUpperCase().includes(keyword.toUpperCase()));
     }
 
+    // LANGKAH 1 -> 2: POPULASI NAMA
     function populateNames() {
       const targetSheet = document.getElementById('sheetTarget').value;
       const dataObj = serverData[targetSheet];
       const select = document.getElementById('namaPdpSelect');
       
-      document.getElementById('task-cards-area').innerHTML = '';
+      // Bersihkan langkah berikutnya
+      document.getElementById('area-container').classList.add('hidden');
       document.getElementById('dynamic-form-area').classList.add('hidden');
       document.getElementById('btn-submit').classList.add('hidden');
+      document.getElementById('desaSelect').innerHTML = '';
       activeRowIndex = null;
 
-      select.innerHTML = '<option value="">-- PILIH NAMA PDP --</option>';
-
-      if(!dataObj || dataObj.data.length === 0) return;
+      if(!dataObj || dataObj.data.length === 0) {
+        select.innerHTML = '<option value="">-- DATABASE KOSONG --</option>';
+        return;
+      }
 
       const nameHeader = findHeader(dataObj.headers, 'NAMA');
       if(!nameHeader) return;
 
+      select.innerHTML = '<option value="">-- PILIH NAMA PDP --</option>';
       const uniqueNames = [...new Set(dataObj.data.map(r => r[nameHeader]).filter(Boolean))].sort();
       uniqueNames.forEach(name => { select.innerHTML += `<option value="${name}">${name}</option>`; });
     }
 
+    // LANGKAH 2 -> 3: PILIH NAMA, MUNCUL DROP DOWN DESA (Satu Desa Satu Form)
     function handleNameSelection() {
       const selectedName = document.getElementById('namaPdpSelect').value;
-      const cardArea = document.getElementById('task-cards-area');
-      const formArea = document.getElementById('dynamic-form-area');
+      const desaSelect = document.getElementById('desaSelect');
       
-      formArea.classList.add('hidden'); document.getElementById('btn-submit').classList.add('hidden'); activeRowIndex = null; cardArea.innerHTML = '';
+      // Bersihkan Form
+      document.getElementById('dynamic-form-area').classList.add('hidden');
+      document.getElementById('btn-submit').classList.add('hidden');
+      activeRowIndex = null;
 
-      if (!selectedName) return;
+      if (!selectedName) {
+        document.getElementById('area-container').classList.add('hidden');
+        return;
+      }
+
+      document.getElementById('area-container').classList.remove('hidden');
+      desaSelect.innerHTML = '<option value="">-- PILIH DESA/AREA TUGAS --</option>';
 
       const targetSheet = document.getElementById('sheetTarget').value;
       const dataObj = serverData[targetSheet];
@@ -206,55 +216,48 @@
       const kecH = findHeader(dataObj.headers, 'KECAMATAN');
       const desaH = findHeader(dataObj.headers, 'DESA') || findHeader(dataObj.headers, 'KELURAHAN');
 
+      // Ambil area untuk nama ini saja
       const assignments = dataObj.data.filter(r => r[nameH] === selectedName);
 
-      let html = `<label class="text-[10px] font-bold text-indigo-500 uppercase block mb-1">Pilih Area Tugas:</label>`;
-      
       assignments.forEach(row => {
-        html += `
-          <div id="card-${row._row}" onclick="activateTaskCard(${row._row})" class="task-card p-4 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center">
-            <div>
-              <p class="font-black text-slate-800 text-sm">${row[kecH] || 'KECAMATAN ?'}</p>
-              <p class="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1 mt-0.5">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
-                ${row[desaH] || 'DESA ?'}
-              </p>
-            </div>
-            <div class="card-icon text-slate-300"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg></div>
-          </div>`;
+        // Tampilkan nama Kecamatan dan Desa di Opsi
+        const label = `${row[kecH] || 'KECAMATAN ?'} - ${row[desaH] || 'DESA ?'}`;
+        desaSelect.innerHTML += `<option value="${row._row}">${label}</option>`;
       });
-      cardArea.innerHTML = html;
     }
 
-    function activateTaskCard(rowIndex) {
-      activeRowIndex = rowIndex; 
-      document.querySelectorAll('.task-card').forEach(card => {
-        card.classList.remove('active-card');
-        card.querySelector('.card-icon').classList.replace('text-indigo-600', 'text-slate-300');
-      });
-      const selectedCard = document.getElementById(`card-${rowIndex}`);
-      selectedCard.classList.add('active-card');
-      selectedCard.querySelector('.card-icon').classList.replace('text-slate-300', 'text-indigo-600');
-      buildDynamicForm(rowIndex);
-    }
-
-    function buildDynamicForm(rowIndex) {
-      const targetSheet = document.getElementById('sheetTarget').value;
-      const dataObj = serverData[targetSheet];
+    // LANGKAH 3 -> TAMPILKAN FORM KHUSUS DESA ITU
+    function handleDesaSelection() {
+      const rowIndex = document.getElementById('desaSelect').value;
       const formArea = document.getElementById('dynamic-form-area');
       const btn = document.getElementById('btn-submit');
-      const rowData = dataObj.data.find(r => r._row == rowIndex);
-      
-      formArea.innerHTML = ''; formArea.classList.remove('hidden'); btn.classList.remove('hidden');
 
+      if (!rowIndex) {
+        formArea.classList.add('hidden');
+        btn.classList.add('hidden');
+        activeRowIndex = null;
+        return;
+      }
+
+      activeRowIndex = Number(rowIndex);
+      const targetSheet = document.getElementById('sheetTarget').value;
+      const dataObj = serverData[targetSheet];
+      const rowData = dataObj.data.find(r => r._row === activeRowIndex);
+      
+      formArea.innerHTML = ''; 
+      formArea.classList.remove('hidden'); 
+      btn.classList.remove('hidden');
+
+      // Buat input otomatis berdasarkan kolom yang ada
       dataObj.headers.forEach(header => {
         const hUp = header.toUpperCase();
+        // Lewati kolom-kolom identitas dasar yang tidak perlu diisi manual
         if(!header || hUp === 'NO' || hUp.includes('PROVINSI') || hUp.includes('KABUPATEN') || hUp.includes('NAMA') || hUp.includes('KECAMATAN') || hUp.includes('DESA') || hUp.includes('KELURAHAN')) return;
 
         const existingValue = rowData[header] || "";
-        const isRequired = existingValue === "" ? "required" : "";
-        const placeholder = existingValue === "" ? `Harap isi ${header}...` : `Terisi: ${existingValue}`;
-        const inputStyle = existingValue === "" ? "border-indigo-300 bg-indigo-50" : "glass-input";
+        const isRequired = existingValue === "" ? "required" : ""; // Wajib isi jika di DB kosong
+        const placeholder = existingValue === "" ? `Harap isi ${header}...` : `Sudah Terisi: ${existingValue}`;
+        const inputStyle = existingValue === "" ? "border-indigo-400 bg-indigo-50/50" : "glass-input";
         
         formArea.innerHTML += `
           <div>
@@ -264,41 +267,53 @@
       });
     }
 
+    // SIMPAN FORM (ANTI LOADING / BYPASS CORS)
     function handleFormSubmit(e) {
       e.preventDefault();
-      if(!activeRowIndex) return alert("Pilih Area Tugas terlebih dahulu!");
+      if(!activeRowIndex) return alert("Pilih Desa terlebih dahulu!");
 
       const sheetName = document.getElementById('sheetTarget').value;
       const selectedName = document.getElementById('namaPdpSelect').value;
+      const desaText = document.getElementById('desaSelect').options[document.getElementById('desaSelect').selectedIndex].text;
+      
       const inputs = document.querySelectorAll('.dynamic-input');
       const updates = {};
       inputs.forEach(input => { updates[input.getAttribute('data-header-name')] = input.value.toUpperCase(); });
 
       const payload = { sheetName: sheetName, rowIndex: activeRowIndex, updates: updates };
 
-      const rowRef = serverData[sheetName].data.find(r => r._row == activeRowIndex);
+      // Update State Lokal tanpa Loading
+      const rowRef = serverData[sheetName].data.find(r => r._row === activeRowIndex);
       for(const [k, v] of Object.entries(updates)) rowRef[k] = v;
-      agendaHistory.unshift({ nama: selectedName, action: "Update Laporan", sheet: sheetName });
+      agendaHistory.unshift({ nama: selectedName, action: `Update Data: ${desaText}`, sheet: sheetName });
 
+      // Reset Formulir secara penuh
       document.getElementById('namaPdpSelect').value = '';
-      document.getElementById('task-cards-area').innerHTML = '';
+      document.getElementById('desaSelect').innerHTML = '<option value="">-- PILIH DESA --</option>';
+      document.getElementById('area-container').classList.add('hidden');
       document.getElementById('dynamic-form-area').classList.add('hidden');
       document.getElementById('btn-submit').classList.add('hidden');
       activeRowIndex = null;
 
-      renderDashboard(); renderAgendaList(); switchTab('agenda');
+      renderDashboard(); 
+      renderAgendaList(); 
+      switchTab('agenda');
       
+      // Kirim Senyap ke Database
       fetch(GAS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
         .catch(err => console.log(err));
     }
 
+    // ===============================================
+    // FUNGSI DASHBOARD & AGENDA
+    // ===============================================
     function renderDashboard() {
       const sheetTarget = document.getElementById('sheetView').value;
       const search = document.getElementById('searchFilter').value.toUpperCase();
       const container = document.getElementById('dashboard-list');
       const dataObj = serverData[sheetTarget];
       
-      if(!dataObj || dataObj.data.length === 0) { container.innerHTML = '<p class="text-xs text-slate-400 py-4">Database kosong.</p>'; return; }
+      if(!dataObj || dataObj.data.length === 0) { container.innerHTML = '<p class="text-xs text-slate-400 py-4 text-center">Database kosong.</p>'; return; }
 
       const nameH = findHeader(dataObj.headers, 'NAMA'); const kecH = findHeader(dataObj.headers, 'KECAMATAN'); const desaH = findHeader(dataObj.headers, 'DESA') || findHeader(dataObj.headers, 'KELURAHAN');
 
@@ -310,7 +325,7 @@
       container.innerHTML = '';
       filtered.slice(0, 15).forEach(item => {
         container.innerHTML += `
-          <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col gap-2">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col gap-2 shadow-sm">
             <h4 class="font-black text-slate-800 text-sm">${item[nameH] || '-'}</h4>
             <div class="flex flex-wrap gap-2">
               <span class="text-[10px] font-bold px-2 py-1 bg-white border border-slate-200 text-slate-600 rounded uppercase">${item[kecH] || '-'}</span>
@@ -325,11 +340,11 @@
       agendaHistory.forEach(item => {
         container.innerHTML += `
           <div class="p-4 bg-white border border-slate-200 rounded-2xl flex justify-between items-center shadow-sm">
-            <div>
-              <h4 class="font-bold text-slate-800 text-sm">${item.nama}</h4>
-              <p class="text-[10px] text-slate-500 font-bold uppercase mt-1">${item.sheet} • ${item.action}</p>
+            <div class="w-full pr-3 overflow-hidden">
+              <h4 class="font-bold text-slate-800 text-sm truncate">${item.nama}</h4>
+              <p class="text-[10px] text-slate-500 font-bold uppercase mt-1 truncate text-ellipsis w-full">${item.sheet} • ${item.action}</p>
             </div>
-            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+            <svg class="w-6 h-6 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
           </div>`;
       });
     }
