@@ -21,7 +21,7 @@
     <div class="flex justify-between items-center">
       <div>
         <h1 class="text-2xl font-black text-slate-900 tracking-tight">SDM<span class="text-indigo-600">PKH</span> Smart</h1>
-        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Filter Per Bulan & Desa</p>
+        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Sistem Input Per Bulan</p>
       </div>
       <div id="sync-status" class="flex items-center gap-2 text-[10px] font-bold text-slate-400 bg-slate-100 px-3 py-1.5 rounded-full">
         <svg class="w-3 h-3 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> Connect...
@@ -32,7 +32,7 @@
   <!-- KONTEN UTAMA -->
   <main class="flex-1 overflow-y-auto p-5 pb-32 hide-scroll relative">
     
-    <!-- DASHBOARD & ANALISA -->
+    <!-- DASHBOARD -->
     <div id="view-dashboard" class="space-y-5 transition-all duration-300">
       <div class="grid grid-cols-2 gap-3">
         <div class="bg-indigo-600 rounded-3xl p-5 text-white shadow-lg relative overflow-hidden">
@@ -47,7 +47,7 @@
 
       <div class="card-solid p-5">
         <h3 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 border-b border-slate-100 pb-3 flex justify-between items-center">
-          Analisa Terpusat
+          Analisa Data Terpusat
           <button onclick="exportCSV()" class="bg-slate-900 text-white px-4 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-transform">CSV</button>
         </h3>
         <select id="sheetView" onchange="renderDashboard()" class="w-full px-4 py-3 glass-input text-sm mb-3">
@@ -55,23 +55,22 @@
           <option value="Sheet2">Analisa Data Sheet 2</option>
         </select>
         <input type="text" id="searchFilter" oninput="renderDashboard()" placeholder="Cari Nama/Kecamatan/Desa..." class="w-full px-4 py-3 glass-input text-sm uppercase mb-4" />
-        
         <div id="dashboard-list" class="space-y-3 max-h-64 overflow-y-auto hide-scroll p-1"></div>
       </div>
     </div>
 
-    <!-- VIEW INPUT (Sistem 1 Desa, 1 Bulan = 5 Form) -->
+    <!-- FORM INPUT (Sistem 1 Desa -> 1 Bulan) -->
     <div id="view-input" class="hidden card-solid p-6 border-t-4 border-indigo-600">
       <div class="mb-5 border-b border-slate-100 pb-4">
-        <h2 class="text-xl font-black text-slate-900 mb-1">Pembaruan Laporan</h2>
-        <p class="text-[10px] text-slate-500 font-bold uppercase">Filter berurutan untuk akurasi data</p>
+        <h2 class="text-xl font-black text-slate-900 mb-1">Pembaruan Bulanan</h2>
+        <p class="text-[10px] text-slate-500 font-bold uppercase">Form akan sesuai header baris 2</p>
       </div>
       
       <form id="form-input" onsubmit="handleFormSubmit(event)" class="space-y-4">
         
-        <!-- Langkah 1: Pilih Sheet -->
+        <!-- Langkah 1: Target Sheet -->
         <div>
-          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1.5">Langkah 1: Target Data</label>
+          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1.5">Langkah 1: Target Worksheet</label>
           <select id="sheetTarget" required onchange="populateNames()" class="w-full px-4 py-3.5 glass-input text-sm font-bold bg-indigo-50 border-indigo-200 text-indigo-900">
             <option value="Sheet1">Sheet 1 (Daftar Hadir)</option>
             <option value="Sheet2">Sheet 2 (Laporan SKP)</option>
@@ -80,7 +79,7 @@
 
         <!-- Langkah 2: Pilih Nama -->
         <div>
-          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1.5">Langkah 2: Pilih Nama PDP</label>
+          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1.5">Langkah 2: Nama Pendamping</label>
           <select id="namaPdpSelect" required onchange="handleNameSelection()" class="w-full px-4 py-3.5 glass-input text-sm uppercase">
             <option value="">-- TUNGGU DATABASE... --</option>
           </select>
@@ -88,15 +87,15 @@
 
         <!-- Langkah 3: Pilih Desa -->
         <div id="area-container" class="hidden">
-          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1.5">Langkah 3: Pilih Desa Tujuan</label>
+          <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1.5">Langkah 3: Area/Desa Tujuan</label>
           <select id="desaSelect" required onchange="handleDesaSelection()" class="w-full px-4 py-3.5 glass-input text-sm uppercase">
-            <option value="">-- PILIH DESA --</option>
+            <option value="">-- PILIH AREA --</option>
           </select>
         </div>
 
-        <!-- Langkah 4: Pilih Bulan Target -->
+        <!-- Langkah 4: Pilih Bulan -->
         <div id="bulan-container" class="hidden">
-          <label class="text-[10px] font-bold text-indigo-600 uppercase ml-1 block mb-1.5">Langkah 4: Pilih Bulan Target</label>
+          <label class="text-[10px] font-bold text-indigo-600 uppercase ml-1 block mb-1.5">Langkah 4: Pilih Bulan Laporan</label>
           <select id="bulanSelect" required onchange="handleBulanSelection()" class="w-full px-4 py-3.5 glass-input text-sm uppercase border-indigo-300">
             <option value="">-- PILIH BULAN --</option>
             <option value="JANUARI">JANUARI</option>
@@ -112,18 +111,14 @@
             <option value="NOVEMBER">NOVEMBER</option>
             <option value="DESEMBER">DESEMBER</option>
           </select>
-          <p class="text-[9px] text-slate-400 font-bold mt-1.5 ml-1">*Hanya memunculkan form khusus bulan terpilih.</p>
         </div>
 
-        <!-- Wadah Form Dinamis -->
-        <div id="dynamic-form-area" class="space-y-4 pt-4 mt-4 border-t border-slate-200 hidden">
-          <!-- Input otomatis masuk ke sini -->
-        </div>
+        <!-- Wadah Form Detail (Berdasarkan Gambar Baris 2) -->
+        <div id="dynamic-form-area" class="space-y-4 pt-4 mt-4 border-t border-slate-200 hidden"></div>
         
-        <!-- Tombol Simpan -->
         <button id="btn-submit" type="submit" class="hidden w-full py-4 mt-4 bg-indigo-600 text-white font-black rounded-xl shadow-[0_8px_20px_-6px_rgba(79,70,229,0.5)] active:scale-95 transition-all text-sm uppercase tracking-wider flex items-center justify-center gap-2">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
-          Simpan Ke Data Terpilih
+          Simpan Ke Database
         </button>
       </form>
     </div>
@@ -135,7 +130,6 @@
     </div>
   </main>
 
-  <!-- NAVIGASI BAWAH -->
   <nav class="absolute bottom-5 left-5 right-5 bg-slate-900 rounded-3xl px-6 py-4 flex justify-between items-center z-20 shadow-2xl">
     <button onclick="switchTab('dashboard')" class="flex flex-col items-center gap-1.5 transition-colors text-white w-16" id="nav-dashboard">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
@@ -152,7 +146,7 @@
 
   <script>
     // =========================================================
-    // PASTIKAN URL APPS SCRIPT ANDA ADA DI SINI
+    // WAJIB TEMPEL URL APPS SCRIPT ANDA DI SINI
     // =========================================================
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbwpN_q5n6Cl-lFfX-OAqUPRZh1xhSV1zDIfy0KeiKUJBq_P8BAHYkooQlMfWZLaOx4bgw/exec';
     
@@ -168,29 +162,26 @@
         if(result.status === 'success') {
           serverData.Sheet1 = result.Sheet1;
           serverData.Sheet2 = result.Sheet2;
-          
           document.getElementById('sync-status').innerHTML = '<span class="text-emerald-500">DATABASE OK</span>';
-          populateNames(); 
-          renderDashboard(); 
+          populateNames(); renderDashboard(); 
         } else {
-           throw new Error("Gagal membaca. Format salah.");
+           throw new Error("Gagal membaca.");
         }
       } catch (error) {
         document.getElementById('sync-status').innerHTML = '<span class="text-red-500">ERROR BACA DB</span>';
       }
     }
 
-    function findHeader(headers, keyword) {
-      return headers.find(h => h.toUpperCase().includes(keyword.toUpperCase()));
+    function findHeaderKey(headers, keyword) {
+      const match = headers.find(h => h.detail.toUpperCase().includes(keyword.toUpperCase()));
+      return match ? match.key : null;
     }
 
-    // LANGKAH 1 -> 2: POPULASI NAMA
     function populateNames() {
       const targetSheet = document.getElementById('sheetTarget').value;
       const dataObj = serverData[targetSheet];
       const select = document.getElementById('namaPdpSelect');
       
-      // Bersihkan langkah berikutnya
       document.getElementById('area-container').classList.add('hidden');
       document.getElementById('bulan-container').classList.add('hidden');
       document.getElementById('dynamic-form-area').classList.add('hidden');
@@ -199,20 +190,14 @@
       document.getElementById('bulanSelect').value = '';
       activeRowIndex = null;
 
-      if(!dataObj || dataObj.data.length === 0) {
-        select.innerHTML = '<option value="">-- DATABASE KOSONG --</option>';
-        return;
-      }
+      if(!dataObj || dataObj.data.length === 0) return;
 
-      const nameHeader = findHeader(dataObj.headers, 'NAMA');
-      if(!nameHeader) return;
-
+      const nameKey = findHeaderKey(dataObj.headers, 'NAMA');
       select.innerHTML = '<option value="">-- PILIH NAMA PDP --</option>';
-      const uniqueNames = [...new Set(dataObj.data.map(r => r[nameHeader]).filter(Boolean))].sort();
+      const uniqueNames = [...new Set(dataObj.data.map(r => r[nameKey]).filter(Boolean))].sort();
       uniqueNames.forEach(name => { select.innerHTML += `<option value="${name}">${name}</option>`; });
     }
 
-    // LANGKAH 2 -> 3: PILIH NAMA, MUNCUL DESA
     function handleNameSelection() {
       const selectedName = document.getElementById('namaPdpSelect').value;
       const desaSelect = document.getElementById('desaSelect');
@@ -220,9 +205,7 @@
       document.getElementById('bulan-container').classList.add('hidden');
       document.getElementById('dynamic-form-area').classList.add('hidden');
       document.getElementById('btn-submit').classList.add('hidden');
-      document.getElementById('bulanSelect').value = '';
-      activeRowIndex = null;
-
+      
       if (!selectedName) {
         document.getElementById('area-container').classList.add('hidden');
         return;
@@ -233,19 +216,17 @@
 
       const targetSheet = document.getElementById('sheetTarget').value;
       const dataObj = serverData[targetSheet];
-      const nameH = findHeader(dataObj.headers, 'NAMA');
-      const kecH = findHeader(dataObj.headers, 'KECAMATAN');
-      const desaH = findHeader(dataObj.headers, 'DESA') || findHeader(dataObj.headers, 'KELURAHAN');
+      const nameKey = findHeaderKey(dataObj.headers, 'NAMA');
+      const kecKey = findHeaderKey(dataObj.headers, 'KECAMATAN');
+      const desaKey = findHeaderKey(dataObj.headers, 'DESA') || findHeaderKey(dataObj.headers, 'KELURAHAN');
 
-      const assignments = dataObj.data.filter(r => r[nameH] === selectedName);
-
+      const assignments = dataObj.data.filter(r => r[nameKey] === selectedName);
       assignments.forEach(row => {
-        const label = `${row[kecH] || 'KECAMATAN ?'} - ${row[desaH] || 'DESA ?'}`;
+        const label = `${row[kecKey] || 'KECAMATAN ?'} - ${row[desaKey] || 'DESA ?'}`;
         desaSelect.innerHTML += `<option value="${row._row}">${label}</option>`;
       });
     }
 
-    // LANGKAH 3 -> 4: PILIH DESA, MUNCUL BULAN
     function handleDesaSelection() {
       const rowIndex = document.getElementById('desaSelect').value;
       const bulanContainer = document.getElementById('bulan-container');
@@ -259,21 +240,18 @@
         activeRowIndex = null;
         return;
       }
-
       activeRowIndex = Number(rowIndex);
       bulanContainer.classList.remove('hidden');
     }
 
-    // LANGKAH 4 -> TAMPILKAN 5 FORM KHUSUS BULAN TERPILIH
+    // MEMUNCULKAN FORM BERDASARKAN BARIS 2 DARI BULAN YANG DIPILIH
     function handleBulanSelection() {
       const selectedBulan = document.getElementById('bulanSelect').value;
       const formArea = document.getElementById('dynamic-form-area');
       const btn = document.getElementById('btn-submit');
 
       if (!selectedBulan || !activeRowIndex) {
-        formArea.classList.add('hidden');
-        btn.classList.add('hidden');
-        return;
+        formArea.classList.add('hidden'); btn.classList.add('hidden'); return;
       }
 
       const targetSheet = document.getElementById('sheetTarget').value;
@@ -281,43 +259,36 @@
       const rowData = dataObj.data.find(r => r._row === activeRowIndex);
       
       formArea.innerHTML = ''; 
-      
       let formCount = 0;
 
-      dataObj.headers.forEach(header => {
-        const hUp = header.toUpperCase();
-        
-        // Cek Identitas yang tidak perlu difilter
-        if(!header || hUp === 'NO' || hUp.includes('PROVINSI') || hUp.includes('KABUPATEN') || hUp.includes('NAMA') || hUp.includes('KECAMATAN') || hUp.includes('DESA') || hUp.includes('KELURAHAN')) return;
-
-        // FILTER SMART: Hanya render form yang nama kolomnya (Header Baris 2) mengandung nama Bulan
-        if(hUp.includes(selectedBulan)) {
+      dataObj.headers.forEach(h => {
+        // Cek jika kolom ini berada di bawah bulan yang dipilih (Baris 1)
+        if(h.month === selectedBulan && h.detail !== "") {
           formCount++;
-          const existingValue = rowData[header] || "";
+          const existingValue = rowData[h.key] || "";
           const isRequired = existingValue === "" ? "required" : ""; 
-          const placeholder = existingValue === "" ? `Harap isi ${header}...` : `Sudah Terisi: ${existingValue}`;
+          const placeholder = existingValue === "" ? `Isi angka ${h.detail}...` : `Telah Terisi: ${existingValue}`;
           const inputStyle = existingValue === "" ? "border-indigo-400 bg-indigo-50/50" : "glass-input";
           
           formArea.innerHTML += `
             <div>
-              <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1.5">${header}</label>
-              <input type="text" data-header-name="${header}" value="${existingValue}" placeholder="${placeholder}" ${isRequired} class="dynamic-input w-full px-4 py-3.5 rounded-xl text-sm uppercase ${inputStyle}" />
+              <label class="text-[10px] font-bold text-slate-500 uppercase ml-1 block mb-1.5">${h.detail}</label>
+              <input type="text" data-header-key="${h.key}" value="${existingValue}" placeholder="${placeholder}" ${isRequired} class="dynamic-input w-full px-4 py-3.5 rounded-xl text-sm uppercase ${inputStyle}" />
             </div>`;
         }
       });
 
       if(formCount === 0) {
-        formArea.innerHTML = `<div class="p-4 bg-red-50 border border-red-200 rounded-xl text-center"><p class="text-xs font-bold text-red-600">Form untuk ${selectedBulan} tidak ditemukan.</p><p class="text-[10px] text-red-500 mt-1">Pastikan Header di Baris 2 mengandung kata "${selectedBulan}".</p></div>`;
+        formArea.innerHTML = `<div class="p-4 bg-red-50 border border-red-200 rounded-xl text-center"><p class="text-xs font-bold text-red-600">Kolom untuk ${selectedBulan} tidak ditemukan di Baris 2.</p></div>`;
       }
 
-      formArea.classList.remove('hidden'); 
-      btn.classList.remove('hidden');
+      formArea.classList.remove('hidden'); btn.classList.remove('hidden');
     }
 
-    // SIMPAN FORM (BYPASS CORS)
+    // SIMPAN FORM BYPASS
     function handleFormSubmit(e) {
       e.preventDefault();
-      if(!activeRowIndex) return alert("Pilih Desa terlebih dahulu!");
+      if(!activeRowIndex) return;
 
       const sheetName = document.getElementById('sheetTarget').value;
       const selectedName = document.getElementById('namaPdpSelect').value;
@@ -326,18 +297,16 @@
       
       const inputs = document.querySelectorAll('.dynamic-input');
       const updates = {};
-      inputs.forEach(input => { updates[input.getAttribute('data-header-name')] = input.value.toUpperCase(); });
+      inputs.forEach(input => { updates[input.getAttribute('data-header-key')] = input.value.toUpperCase(); });
 
       const payload = { sheetName: sheetName, rowIndex: activeRowIndex, updates: updates };
 
-      // Update State Lokal
       const rowRef = serverData[sheetName].data.find(r => r._row === activeRowIndex);
       for(const [k, v] of Object.entries(updates)) rowRef[k] = v;
-      agendaHistory.unshift({ nama: selectedName, action: `Update Data [${bulanText}]: ${desaText}`, sheet: sheetName });
+      agendaHistory.unshift({ nama: selectedName, action: `Bulan ${bulanText} - ${desaText}`, sheet: sheetName });
 
-      // Reset Formulir
       document.getElementById('namaPdpSelect').value = '';
-      document.getElementById('desaSelect').innerHTML = '<option value="">-- PILIH DESA --</option>';
+      document.getElementById('desaSelect').innerHTML = '<option value="">-- PILIH AREA --</option>';
       document.getElementById('bulanSelect').value = '';
       document.getElementById('area-container').classList.add('hidden');
       document.getElementById('bulan-container').classList.add('hidden');
@@ -345,16 +314,13 @@
       document.getElementById('btn-submit').classList.add('hidden');
       activeRowIndex = null;
 
-      renderDashboard(); 
-      renderAgendaList(); 
-      switchTab('agenda');
+      renderDashboard(); renderAgendaList(); switchTab('agenda');
       
-      // Kirim Background
       fetch(GAS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
         .catch(err => console.log(err));
     }
 
-    // FUNGSI DASHBOARD & AGENDA
+    // DASHBOARD & AGENDA
     function renderDashboard() {
       const sheetTarget = document.getElementById('sheetView').value;
       const search = document.getElementById('searchFilter').value.toUpperCase();
@@ -363,21 +329,21 @@
       
       if(!dataObj || dataObj.data.length === 0) { container.innerHTML = '<p class="text-xs text-slate-400 py-4 text-center">Database kosong.</p>'; return; }
 
-      const nameH = findHeader(dataObj.headers, 'NAMA'); const kecH = findHeader(dataObj.headers, 'KECAMATAN'); const desaH = findHeader(dataObj.headers, 'DESA') || findHeader(dataObj.headers, 'KELURAHAN');
+      const nameKey = findHeaderKey(dataObj.headers, 'NAMA'); const kecKey = findHeaderKey(dataObj.headers, 'KECAMATAN'); const desaKey = findHeaderKey(dataObj.headers, 'DESA') || findHeaderKey(dataObj.headers, 'KELURAHAN');
 
       document.getElementById('stat-total').innerText = dataObj.data.length;
-      document.getElementById('stat-pdp').innerText = new Set(dataObj.data.map(r => r[nameH]).filter(Boolean)).size;
+      document.getElementById('stat-pdp').innerText = new Set(dataObj.data.map(r => r[nameKey]).filter(Boolean)).size;
 
-      const filtered = dataObj.data.filter(r => { return (r[nameH]||'').toUpperCase().includes(search) || (r[kecH]||'').toUpperCase().includes(search) || (r[desaH]||'').toUpperCase().includes(search); });
+      const filtered = dataObj.data.filter(r => { return (r[nameKey]||'').toUpperCase().includes(search) || (r[kecKey]||'').toUpperCase().includes(search) || (r[desaKey]||'').toUpperCase().includes(search); });
 
       container.innerHTML = '';
       filtered.slice(0, 15).forEach(item => {
         container.innerHTML += `
           <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col gap-2 shadow-sm">
-            <h4 class="font-black text-slate-800 text-sm">${item[nameH] || '-'}</h4>
+            <h4 class="font-black text-slate-800 text-sm">${item[nameKey] || '-'}</h4>
             <div class="flex flex-wrap gap-2">
-              <span class="text-[10px] font-bold px-2 py-1 bg-white border border-slate-200 text-slate-600 rounded uppercase">${item[kecH] || '-'}</span>
-              <span class="text-[10px] font-bold px-2 py-1 bg-white border border-slate-200 text-slate-600 rounded uppercase">${item[desaH] || '-'}</span>
+              <span class="text-[10px] font-bold px-2 py-1 bg-white border border-slate-200 text-slate-600 rounded uppercase">${item[kecKey] || '-'}</span>
+              <span class="text-[10px] font-bold px-2 py-1 bg-white border border-slate-200 text-slate-600 rounded uppercase">${item[desaKey] || '-'}</span>
             </div>
           </div>`;
       });
@@ -400,8 +366,8 @@
     function exportCSV() {
       const sheetTarget = document.getElementById('sheetView').value; const dataObj = serverData[sheetTarget];
       if(!dataObj || dataObj.data.length === 0) return alert("Kosong.");
-      let csv = dataObj.headers.join(",") + "\n";
-      dataObj.data.forEach(row => { csv += dataObj.headers.map(h => `"${row[h] || ''}"`).join(",") + "\n"; });
+      let csv = dataObj.headers.map(h => `"${h.month}_${h.detail}"`).join(",") + "\n";
+      dataObj.data.forEach(row => { csv += dataObj.headers.map(h => `"${row[h.key] || ''}"`).join(",") + "\n"; });
       const uri = encodeURI("data:text/csv;charset=utf-8," + csv);
       const link = document.createElement("a"); link.setAttribute("href", uri); link.setAttribute("download", `${sheetTarget}_Export.csv`);
       document.body.appendChild(link); link.click(); document.body.removeChild(link);
